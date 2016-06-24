@@ -1,16 +1,16 @@
 Installation
 ===========
 
-#. Clone this plugin in redmine_root/plugins/
-#. Go to redmine_root
-#. rake redmine:plugins:migrate  RAILS_ENV=production
+1. Clone this plugin in redmine_root/plugins/
+2. Go to redmine_root
+3. rake redmine:plugins:migrate  RAILS_ENV=production
 
 Uninstallation
 =============
 
-#. Go to redmine_root
-#. rake redmine:plugins:migrate NAME=redmine_video VERSION=0  RAILS_ENV=production
-#. Delete the plugin directory
+1. Go to redmine_root
+2. rake redmine:plugins:migrate NAME=redmine_video VERSION=0  RAILS_ENV=production
+3. Delete the plugin directory
 
 Feature
 =======

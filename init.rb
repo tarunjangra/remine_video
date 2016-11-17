@@ -45,11 +45,17 @@ Redmine::Plugin.register :redmine_video do
 			if args.length < 1
 	      return "Video url is mandatory. mp4, mpeg, flv etc."
 	    end
-      url  = args[0].gsub(/<.*?>/, '').gsub(/&lt;.*&gt;/,'')
-	   	w = 640
+
+			attachment = obj.attachments.find_by_filename(args[0]) if obj.respond_to?('attachments')
+      if attachment
+         url = url_for(:only_path => false, :controller => 'attachments', :action => 'download', :id => attachment, :filename => attachment.filename)
+      else
+         url = args[0].gsub(/<.*?>/, '').gsub(/&lt;.*&gt;/,'')
+      end
+	   	
+			 w = 640
 	   	h = 480
-			@player_num ||= 0
-			@player_num = @player_num + 1
+			@player_num = url.object_id
 	   	if args.length == 3
 	     	w = args[1]
 	     	h = args[2]

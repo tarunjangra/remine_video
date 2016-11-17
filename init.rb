@@ -55,7 +55,7 @@ Redmine::Plugin.register :redmine_video do
 	   	
 			 w = 640
 	   	h = 480
-			@player_num = url.object_id
+			@player_num = url.gsub(/[^\da-zA-Z]/, '')
 	   	if args.length == 3
 	     	w = args[1]
 	     	h = args[2]

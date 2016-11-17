@@ -40,12 +40,12 @@ Redmine::Plugin.register :redmine_video do
 	   end
   end
 	Redmine::WikiFormatting::Macros.register do
-		desc "This plugin adds a macro to Wiki Redmine that allow the posting of YouTube videos. Syntax: <pre>{{vimeo( video_key, [width, height] )}}</pre>"
-    macro :jwplayer do |obj, args|
+		desc "This plugin adds a macro to Wiki Redmine that allow the posting of videos mp4, mpeg, flv. Syntax: <pre>{{vimeo( video-url, [width, height] )}}</pre>"
+    macro :video do |obj, args|
 			if args.length < 1
 	      return "Video url is mandatory. mp4, mpeg, flv etc."
 	    end
-      url  = args[0]
+      url  = args[0].gsub(/<.*?>/, '').gsub(/&lt;.*&gt;/,'')
 	   	w = 640
 	   	h = 480
 	   	if args.length == 3

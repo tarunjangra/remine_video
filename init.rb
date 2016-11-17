@@ -66,7 +66,8 @@ Redmine::Plugin.register :redmine_video do
 					});
 			</script>
 			END
-    	return out.html_safe
+			
+    	out.html_safe
 	   end
   end
 end

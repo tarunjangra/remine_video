@@ -55,18 +55,17 @@ Redmine::Plugin.register :redmine_video do
 	     	h = args[2]
       end
 
-			out = <<END
-			<script type="text/javascript" src="http://cdn.jsdelivr.net/jwplayer/7.1.4/jwplayer.js"></script>
-			<div id="video_#{@player_num}">Loading the player ...</div>
-			<script type="text/javascript">
-					jwplayer("video_#{@player_num}").setup({
-							file: "#{url}",
-							height: #{h},
-							width: #{w} 
-					});
-			</script>
-			END
-			
+out = <<END
+<script type="text/javascript" src="http://cdn.jsdelivr.net/jwplayer/7.1.4/jwplayer.js"></script>
+<div id="video_#{@player_num}">Loading the player ...</div>
+<script type="text/javascript">
+  jwplayer("video_#{@player_num}").setup({
+    file: "#{url}",
+		height: #{h},
+		width: #{w} 
+});
+</script>
+END
     	out.html_safe
 	   end
   end

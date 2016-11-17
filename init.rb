@@ -1,12 +1,12 @@
 Redmine::Plugin.register :redmine_video do
-	name 'YouTube/Vimeo macro plugin for Wiki Redmine'
+	name 'YouTube/Vimeo/video macro plugin for Wiki Redmine'
 	author 'Tarun Jangra'
 	description 'This plugin adds a macro to Wiki Redmine that allow the posting of YouTube videos'
 	version '1.0.0'
 	url 'http://github.com/tarunjangra/redmine_video'
 	author_url 'http://tarunjangra.com'
 	Redmine::WikiFormatting::Macros.register do
-	  desc "This plugin adds a macro to Wiki Redmine that allow the posting of YouTube videos. Syntax: <pre>{{youtube( video_key, [width, height] )}}</pre>"
+	  desc "This plugin adds a macro to Wiki Redmine that allow the posting of YouTube videos. Syntax: <pre>{{youtube( video_key, width, height )}}</pre>"
 	  macro :youtube do |obj, args|
 			if args.length < 1
 	      return "Youtube video id is mandatory."
@@ -23,7 +23,7 @@ Redmine::Plugin.register :redmine_video do
 	  end
   end
   Redmine::WikiFormatting::Macros.register do
-		desc "This plugin adds a macro to Wiki Redmine that allow the posting of YouTube videos. Syntax: <pre>{{vimeo( video_key, [width, height] )}}</pre>"
+		desc "This plugin adds a macro to Wiki Redmine that allow the posting of YouTube videos. Syntax: <pre>{{vimeo( video_key, width, height )}}</pre>"
     macro :vimeo do |obj, args|
 			if args.length < 1
 	      return "vimeo video id is mandatory."
@@ -40,7 +40,7 @@ Redmine::Plugin.register :redmine_video do
 	   end
   end
 	Redmine::WikiFormatting::Macros.register do
-		desc "This plugin adds a macro to Wiki Redmine that allow the posting of videos mp4, mpeg, flv. Syntax: <pre>{{vimeo( video-url, [width, height] )}}</pre>"
+		desc "This plugin adds a macro to Wiki Redmine that allow the posting of videos mp4, mpeg, flv. Syntax: <pre>{{vimeo( video-url, width, height )}}</pre>"
     macro :video do |obj, args|
 			if args.length < 1
 	      return "Video url is mandatory. mp4, mpeg, flv etc."
@@ -48,28 +48,25 @@ Redmine::Plugin.register :redmine_video do
       url  = args[0].gsub(/<.*?>/, '').gsub(/&lt;.*&gt;/,'')
 	   	w = 640
 	   	h = 480
+			@player_num ||= 0
+			@player_num = @player_num + 1
 	   	if args.length == 3
 	     	w = args[1]
 	     	h = args[2]
       end
-			num ||= 0
-			num = num + 1
 
-out = <<END
-<script type="text/javascript" src="http://cdn.jsdelivr.net/jwplayer/7.1.4/jwplayer.js"></script>
-<div id="video_#{num}">Loading the player ...</div>
-<script type="text/javascript">
-    jwplayer("video_#{num}").setup({
-        file: "#{url}",
-        height: #{h},
-        width: #{w} 
-    });
-</script>
-END
-
-    out.html_safe
+			out = <<END
+			<script type="text/javascript" src="http://cdn.jsdelivr.net/jwplayer/7.1.4/jwplayer.js"></script>
+			<div id="video_#{@player_num}">Loading the player ...</div>
+			<script type="text/javascript">
+					jwplayer("video_#{@player_num}").setup({
+							file: "#{url}",
+							height: #{h},
+							width: #{w} 
+					});
+			</script>
+			END
+    	return out.html_safe
 	   end
   end
-
-	
 end

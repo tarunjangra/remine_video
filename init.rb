@@ -60,7 +60,7 @@ out = <<END
 <div id="video_#{num}">Loading the player ...</div>
 <script type="text/javascript">
     jwplayer("video_#{num}").setup({
-        file: "#{file_url}",
+        file: "#{url}",
         height: #{h},
         width: #{w} 
     });
